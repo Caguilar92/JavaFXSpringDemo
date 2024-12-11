@@ -13,6 +13,7 @@ import java.util.List;
 @FxmlView("/main.fxml")
 public class FXController {
     private PIRDAO pirdao;
+    private int pirCount;
     @FXML
     private VBox vBox;
     public FXController(PIRDAO pirdao) {
@@ -25,15 +26,15 @@ public class FXController {
          * just adding 0 as a place holder not actaully used in the
          * dao because the table will auto generate one for you
          */
-        PIR pirToSave = new PIR(0,"PIR 1");
+        PIR pirToSave = new PIR(0,"PIR " + ++pirCount);
         pirdao.saveNewPIR(pirToSave);
-
-
+        vBox.getChildren().clear();
         List<PIR> savedPIRS = pirdao.getAllPIRs();
-        for (PIR pir : savedPIRS) {
-            Label pirLabel = new Label(pir.toString());
+        for(int i = 0;  i < savedPIRS.size();  i++) {
+            Label pirLabel = new Label(savedPIRS.get(i).getName());
             vBox.getChildren().add(pirLabel);
         }
+
 
     }
 
